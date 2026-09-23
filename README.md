@@ -28,7 +28,7 @@ laptop, then everyone's data gets merged into one master dataset.
 
 5. Confirm your webcam and hand tracking work:
    ```bash
-   python 01_test_camera.py
+   python test_camera.py
    ```
    You should see a window with green dots tracking your hand. Press `q` to quit.
 
@@ -42,8 +42,8 @@ Agreed initials for this team:
 Run, incrementing `--person` for each new contributor you personally record:
 
 ```bash
-python 02_collect_dataset_parallel.py --collector DA --person 1
-python 02_collect_dataset_parallel.py --collector DA --person 2
+python collect_dataset.py --collector DA --person 1
+python collect_dataset.py --collector DA --person 2
 ```
 
 This produces a file like `gesture_data_DA_p1.csv` in your local folder.
@@ -51,6 +51,25 @@ This produces a file like `gesture_data_DA_p1.csv` in your local folder.
 **Before you record anyone, agree as a team on lighting variation** — don't
 all three of you collect under similar lighting by accident. One person
 should use a bright room, one a dim room, one near natural window light.
+
+### Controls during a session
+
+| Key | Action |
+|---|---|
+| `SPACE` | Capture a sample for the current gesture |
+| `d` | Delete the most recent sample of the current gesture |
+| `u` | Undo — step back one checkpoint |
+| `n` | Move to the next gesture |
+| `b` | Move to the previous gesture |
+| `q` | Save and quit |
+
+Each gesture asks for `SAMPLES_PER_GESTURE` samples (set in `collect_dataset.py`),
+varying hand position/rotation/distance as you go through the on-screen
+group prompts. Every capture and delete writes a numbered snapshot to
+`checkpoints/<COLLECTOR>_p<N>/`, so `u` can step back through the session
+one action at a time. If you close the script and re-run the same command
+later, it picks up exactly where you left off using your existing CSV and
+checkpoints.
 
 ## Sharing your data with the team
 
@@ -72,7 +91,7 @@ Once all sessions are pushed and everyone has pulled the latest:
 
 ```bash
 git pull
-python 04_merge_datasets.py
+python merge_datasets.py
 ```
 
 This creates `master_gesture_data.csv` locally (this file is intentionally
@@ -84,11 +103,12 @@ plus a percentage progress against the ~28,000 sample target.
 
 | File | Purpose |
 |---|---|
-| `01_test_camera.py` | Sanity check — confirms webcam + hand tracking work |
-| `02_collect_dataset_parallel.py` | Main collection script, run once per person |
-| `03_train_quick_check.py` | Quick accuracy gut-check on early data |
-| `04_merge_datasets.py` | Combines everyone's CSVs into one master file |
+| `test_camera.py` | Sanity check — confirms webcam + hand tracking work |
+| `collect_dataset.py` | Main collection script, run once per person. Supports resume, undo, and per-action checkpoints |
+| `train_quick_check.py` | Quick accuracy gut-check on early data |
+| `merge_datasets.py` | Combines everyone's CSVs into one master file |
 | `requirements.txt` | Exact package versions, install with pip |
+| `checkpoints/` | Auto-generated per-session backups from `collect_dataset.py` (git-ignored) |
 
 ## Target
 

@@ -15,6 +15,9 @@ Thumbs.db
 # VS Code settings (optional — remove this line if you want to share settings)
 .vscode/
 
-# Merged master dataset — regenerate locally with 04_merge_datasets.py
+# Merged master dataset — regenerate locally with merge_datasets.py
 # rather than committing a large generated file repeatedly
 master_gesture_data.csv
+
+# Per-session checkpoint snapshots from collect_dataset.py
+checkpoints/
