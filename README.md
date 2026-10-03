@@ -96,8 +96,7 @@ python merge_datasets.py
 
 This creates `master_gesture_data.csv` locally (this file is intentionally
 git-ignored, everyone regenerates it themselves rather than fighting over
-one shared copy) and prints a breakdown of samples per person per gesture,
-plus a percentage progress against the ~28,000 sample target.
+one shared copy) and prints a breakdown of samples per person per gesture.
 
 ## File overview
 
@@ -112,6 +111,5 @@ plus a percentage progress against the ~28,000 sample target.
 
 ## Target
 
-7 gesture classes (6 poses + Neutral) × ~400 samples per person × 9-10
-contributors ≈ 28,000 labelled landmark samples, split 70/15/15 by
-person for training, validation, and testing.
+7 gesture classes (6 poses + Neutral) × 15 samples per person × ~30-50
+contributors, split 70/15/15 by person for training, validation, and testing.
